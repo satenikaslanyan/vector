@@ -8,7 +8,7 @@ int main()
     }
     v.push_back(170);
     std::cout << v;
-    v.insert(2, 10);
+    v.insert(5, 10);
     std::cout << v;
     v.remove(3);
     v[8] = 111;
