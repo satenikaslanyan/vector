@@ -82,6 +82,8 @@ void Vector<T>::insert(int i, T item)
 template <class T>
 void Vector<T>::remove(int i)
 {
+    // out of range check
+    // empty vector check
     for (int j = i; j < m_size - 1; ++j) {
         m_vector[j] = m_vector[j + 1];
     }
@@ -106,6 +108,7 @@ void Vector<T>::pop_back()
 template <class T>
 void Vector<T>::resize()
 {
+   // redundant vector used 
     T* old = new T [m_capacity];
     for (int i = 0; i < m_capacity; ++i) {
         old[i] = m_vector[i];

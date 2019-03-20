@@ -8,6 +8,8 @@ template <class T> class Vector;
 template <class T>
 std::ostream& operator<<(std::ostream& out, const Vector<T>& v);
 
+
+
 template <class T>
 class Vector
 {
@@ -35,7 +37,7 @@ class Vector
        void pop_back();
 };
 
-#include "vector.tpp"
+#include "vector.cpp"
 
 #endif
 
