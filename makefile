@@ -22,14 +22,18 @@ obj/%.dep : src/%.cpp
 obj/%.o :
 	$(CC) $(compiler_flags) $(INC) $< -o $@ 
 
-bin/out : $(OBJECTS) ./bin
+bin/out : $(OBJECTS) ./bin ./inc
 	$(CC) $(OBJECTS) -o $@
 
 ./bin:
 	mkdir -p bin
 
+./inc:
+	mkdir -p inc
+	cp ./src/*.hpp ./inc/.
+
 .PHONY clean: 
-	rm -rf ./obj  ./bin
+	rm -rf ./obj  ./bin ./inc
 
 
 

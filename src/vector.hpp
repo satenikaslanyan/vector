@@ -1,3 +1,42 @@
+#ifndef VECTOR_H
+#define VECTOR_H
+#include <iostream>
+#include <assert.h>
+
+template <class T> class Vector;
+
+template <class T>
+std::ostream& operator<<(std::ostream& out, const Vector<T>& v);
+
+
+
+template <class T>
+class Vector
+{
+    protected:
+       int m_size;
+       int m_capacity;
+       T* m_vector;
+       void resize();
+    public:
+       Vector();
+       Vector(const Vector& v);
+       ~Vector();
+       Vector& operator=(const Vector& v);
+       T& back();
+       int get_size();
+       bool is_empty();
+       T& operator[](int i);
+       const T& operator[](int i) const { return m_vector[i]; }
+       friend std::ostream& operator<< <>(std::ostream& out, const Vector& v);
+       void insert(int i, T item);
+       void remove(int i);
+       void push_back(T item);
+       void pop_back();
+};
+
+#endif
+
 template <class T> 
 Vector<T>::Vector() 
     : m_size(0)
@@ -17,6 +56,7 @@ Vector<T>::Vector(const Vector<T>& v)
     m_size = v.m_size;
     m_capacity = v.m_capacity;
     m_vector = new T [m_capacity];
+    assert(m_vector);
     for (int i = 0; i < m_capacity; ++i) {
         m_vector[i] = v.m_vector[i];
     }
@@ -39,6 +79,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& v)
         m_capacity = v.m_capacity;
         m_size = v.m_size;
         m_vector = new T [m_capacity];
+        assert(m_vector);
         for (int i = 0; i < m_capacity; ++i) {
             m_vector[i] = v.m_vector[i];
         }
@@ -50,6 +91,18 @@ template <class T>
 int Vector<T>::get_size()
 {
     return m_size;
+}
+
+template <class T>
+bool Vector<T>::is_empty()
+{
+    return (0 == m_size);
+}
+
+template <class T>
+T& Vector<T>::back()
+{
+    return m_vector[m_size - 1];
 }
 
 template <class T>
@@ -67,6 +120,7 @@ void Vector<T>::insert(int i, T item)
 {
     if (i > m_size) {
         std::cout << "Out of range" << std::endl;
+        return;
     } else {	    
 	++m_size;
 	if (m_size > m_capacity) {
@@ -82,8 +136,10 @@ void Vector<T>::insert(int i, T item)
 template <class T>
 void Vector<T>::remove(int i)
 {
-    // out of range check
-    // empty vector check
+    if (i > m_size - 1) {
+        std::cout << "Out of range" << std::endl;
+        return;
+    }
     for (int j = i; j < m_size - 1; ++j) {
         m_vector[j] = m_vector[j + 1];
     }
@@ -93,7 +149,7 @@ void Vector<T>::remove(int i)
 template <class T>
 void Vector<T>::push_back(T item)
 {
-    if(m_size > m_capacity) {
+    if (m_size > m_capacity) {
         resize();
     }
     insert(m_size, item);
@@ -108,17 +164,14 @@ void Vector<T>::pop_back()
 template <class T>
 void Vector<T>::resize()
 {
-   // redundant vector used 
-    T* old = new T [m_capacity];
-    for (int i = 0; i < m_capacity; ++i) {
-        old[i] = m_vector[i];
-    }
     m_capacity *= 2;
-    m_vector = new T [m_capacity];
+    T* new_ptr = new T [m_capacity];
+    assert(new_ptr);
     for (int i = 0; i < m_capacity/2; ++i) {
-        m_vector[i] = old[i];
+        new_ptr[i] = m_vector[i];
     }
-    delete [] old;
+    delete [] m_vector;
+    m_vector = new_ptr;
 }
 
 template <class T>
@@ -129,4 +182,4 @@ std::ostream& operator<<(std::ostream& out, const Vector<T>& v)
     }
     std::cout << std::endl; 
     return out; 
-} 
+}
