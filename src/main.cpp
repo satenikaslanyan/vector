@@ -25,7 +25,7 @@ int main()
     for (int i = 0; i < 10; ++i) {
         st.push(i);
     }
-    while (!st.s_is_empty()) {
+    while (!st.is_empty()) {
         try {
             std::cout << st.top() << "  ";
         } catch (const char* c) { 
