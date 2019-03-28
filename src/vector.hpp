@@ -23,15 +23,35 @@ class Vector
        Vector(const Vector& v);
        ~Vector();
        Vector& operator=(const Vector& v);
+
+       // This function returns last element of the vector
        T& back();
+
+       // This function returns sized of the vector
        int get_size();
+
+       // This function checks if the list is empty or not
        bool is_empty();
+
+       // The overload function of operator[]
        T& operator[](int i);
+
+       // The overload function of operator[] (for constant vector)
        const T& operator[](int i) const { return m_vector[i]; }
+
+       // The overload function of operator<<
        friend std::ostream& operator<< <>(std::ostream& out, const Vector& v);
+
+       //This function is for inserting an element in range of [0, m_size]
        void insert(int i, T item);
+
+       //This function is for deleting an element in range of [0, m_size-1]
        void remove(int i);
+
+       //This function adds an element in the end of the vector
        void push_back(T item);
+
+       //This function deletes the last element of the vector
        void pop_back();
 };
 
